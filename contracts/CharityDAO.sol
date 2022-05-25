@@ -135,11 +135,11 @@ contract CharityDAO is ReentrancyGuard, AccessControl {
         emit ContributionReceived(msg.sender, msg.value);
     }
 
-    function makeStakeholder(uint256 amount) external {
+    function becomeStakeholder(uint256 amount) external {
         address account = msg.sender;
         uint256 amountContributed = amount;
 
-        // think more 
+        // think more - already made sense of this
         if (!hasRole(STAKEHOLDER_ROLE, account)) {
             uint256 totalContributed = contributors[account] + amountContributed;
 
@@ -155,5 +155,62 @@ contract CharityDAO is ReentrancyGuard, AccessControl {
         }
     }
 
-    
+    function getProposals()
+        public
+        view
+        returns (CharityProposal[] memory props)
+
+        {
+            props = new CharityProposal[](numOfProposals.current());
+
+            for (uint256 index = 0; index < numOfProposals.current(); index++) {
+                props[index] = charityProposals[index];
+            }
+        }
+
+    function getProposal(uint256 proposalId)
+        public
+        view
+        returns (CharityProposal memory)
+
+        {
+            return charityProposals[proposalId];
+        }
+
+     function getStakeholderVotes()
+        public
+        view
+        onlyStakeholder("User is not a stakeholder") returns (uint256[] memory)
+            
+        {
+            return stakeholderVotes[msg.sender];
+        }
+
+    function getStakeholderBalance()
+        public
+        view
+        onlyStakeholder("User is not a stakeholder")  returns (uint256)
+        {
+           
+            return stakeHolders[msg.sender];
+        }
+
+    function isStakeholder() public view returns (bool) {
+        return stakeHolders[msg.sender] > 0;
+    }
+
+    function getContributorBalance()
+        public
+        view
+        onlyContributor("User is not a contributor") returns (uint256)
+        
+        {
+            return contributors[msg.sender];
+        }
+
+    function isContributor() public view returns (bool) {
+        return contributors[msg.sender] > 0;
+    }
+
+        
 }
