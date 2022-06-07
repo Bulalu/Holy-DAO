@@ -6,12 +6,15 @@ pragma solidity ^0.8.13;
 interface IdaoNft{
     function balanceOf(address, uint256) external view returns(uint256);
 }
+
+
 contract FocusDao {
 
     address public owner;
     uint256 nextproposal;
     uint256[] public validTokens;
     IdaoNft nftContract;
+    
 
     struct Proposal {
         uint256 id;
@@ -53,7 +56,7 @@ contract FocusDao {
     constructor(){
         owner = msg.sender;
         nextproposal = 1;
-        nftContract = IdaoNft('0x705f8b395361218056b20ee5c36853ab84b8bbff');
+        nftContract = IdaoNft(0x705f8B395361218056B20eE5C36853AB84b8bbFF);
         validTokens = [0];
     }
 
