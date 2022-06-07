@@ -4,8 +4,7 @@ pragma solidity ^0.8.13;
 
 // iconic NFTs interface
 interface IdaoNft{
-    function balanceOf(address, uint256) external view returns(uint256);
-}
+    function balanceOf(address _owner) external view returns (uint256);}
 
 
 contract FocusDao {
@@ -63,7 +62,7 @@ contract FocusDao {
 
     function checkProposalEligibility(address _proposalist) private view returns (bool) {
         for(uint i = 0; i < validTokens.length; i++){
-            if(nftContract.balanceOf(_proposalist, validTokens[i]) >= 1){
+            if(nftContract.balanceOf(_proposalist) >= 1){
                 return true;
             }
         }
