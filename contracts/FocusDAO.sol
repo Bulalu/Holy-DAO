@@ -102,13 +102,16 @@ contract FocusDao {
 
         Proposal storage p = proposal[_id];
 
+
+        p.voteStatus[msg.sender] = true;
+        
         if(_vote) {
             p.votesFor++;
         }else {
             p.votesAgainst++;
         }
 
-        p.voteStatus[msg.sender] = true;
+        
 
         emit newVote(p.votesFor, p.votesAgainst, msg.sender, _id, _vote);
     }
