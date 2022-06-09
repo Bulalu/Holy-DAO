@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import "./pages.css";
 import { TabList, Tab, Widget, Tag, Table, Form} from "web3uikit";
 import { Link } from "react-router-dom";
+
+
+
 const Home = () => {
  
 
@@ -78,15 +81,40 @@ const [proposals, setProposals] = useState([
                   pageSize={5}
                 />
               </div>
-
+                   
+                    <Form
+                        buttonConfig={{
+                            isLoading: false,
+                            loadingText: "Submitting Proposal",
+                            text: "Submit",
+                            theme: "secondary",
+                        }}
+                        data={[
+                            {
+                            inputWidth: "100%",
+                            name: "New Proposal",
+                            type: "textarea",
+                            validation: {
+                                required: true,
+                            },
+                            value: "",
+                            },
+                        ]}
+                        onSubmit={(e) => {
+                            alert("Proposal Submitted")
+                        }}
+                        title="Create a New Proposal"
+                    />
 
                   </div>
+                  
                   
               </Tab>
               <Tab tabKey={2} tabName="Forum"></Tab>
               <Tab tabKey={3} tabName="Docs"></Tab>
           </TabList>
       </div>
+      <div className="voting"></div>
     </>
   );
 };
