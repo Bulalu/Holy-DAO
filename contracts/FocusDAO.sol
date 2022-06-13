@@ -96,9 +96,10 @@ contract FocusDao {
 
     function voteOnProposal(uint256 _id, bool _vote) public {
         require(proposal[_id].exists, "This Proposal does not exist");
+        require(block.number <= proposal[_id].deadline, "The deadline has passed for this Proposal");
         require(checkVoteEligibility(_id, msg.sender), "You can not vote on this Proposal");
         require(!proposal[_id].voteStatus[msg.sender], "You have already voted on this Proposal");
-        require(block.number <= proposal[_id].deadline, "The deadline has passed for this Proposal");
+        
 
         Proposal storage p = proposal[_id];
 

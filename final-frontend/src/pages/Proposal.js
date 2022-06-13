@@ -62,14 +62,14 @@ const Proposal = () => {
       getVotes();
 
     }
-  }, [isInitialized]);
+  }, [Moralis.Object, Moralis.Query, isInitialized, proposalDetails.id]);
 
 
 
   async function castVote(status) {
-    
+    // const web3 = await Moralis.enableWeb3();
     let options = {
-      contractAddress: "0xD2576Ea24200b90eC58c9c8472469916A1592CeF",
+      contractAddress: "0x4BAF56d5b3d6C505F1BfaA492B555033E68c8ED0",
       functionName: "voteOnProposal",
       abi: [
         {
@@ -97,17 +97,20 @@ const Proposal = () => {
       },
     };
 
-
+    
     await contractProcessor.fetch({
       params: options,
       onSuccess: () => {
         console.log("Vote Cast Succesfully");
         setSub(false);
       },
-      onError: (error) => {
-        alert(error.data.message);
+ 
+      onError: (status) => {
+        console.log(status.error.message);
+        alert(status.error.message);
         setSub(false);
-      },
+      }
+
     });
 
   }

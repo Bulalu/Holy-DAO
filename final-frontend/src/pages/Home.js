@@ -18,7 +18,7 @@ const Home = () => {
 
   async function createProposal(newProposal) {
     let options = {
-      contractAddress: "0xD2576Ea24200b90eC58c9c8472469916A1592CeF",
+      contractAddress: "0x4BAF56d5b3d6C505F1BfaA492B555033E68c8ED0",
       functionName: "createProposal",
       abi: [
         {
@@ -53,8 +53,9 @@ const Home = () => {
         console.log("Proposal Succesful");
         setSub(false);
       },
-      onError: (error) => {
-        alert(error.data.message);
+      onError: (status) => {
+        console.log(status.error.message);
+        alert(status.error.message);
         setSub(false);
       },
     });
@@ -64,7 +65,7 @@ const Home = () => {
 
 
   async function getStatus(proposalId) {
-    const ProposalCounts = Moralis.Object.extend("ProposalCounts");
+    const ProposalCounts = Moralis.Object.extend("ProposalCount");
     const query = new Moralis.Query(ProposalCounts);
     query.equalTo("uid", proposalId);
     const result = await query.first();
@@ -248,7 +249,6 @@ const Home = () => {
             
             
           </Tab>
-          <Tab tabKey={3} tabName="Docs"></Tab>
         </TabList>
       </div>
       <div className="voting"></div>

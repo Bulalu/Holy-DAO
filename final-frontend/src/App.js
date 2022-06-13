@@ -4,13 +4,15 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Proposal from "./pages/Proposal";
 import moralisLogo from "./images/Moralis.png";
+import myLogo from "./images/me.png";
 import { ConnectButton } from "web3uikit";
 
 const App = () => {
   return (
     <>
       <div className="header">
-        <img width="160px" src={moralisLogo} alt="logo" />
+        <img width="100px"  src="https://media.giphy.com/media/MagSgolK3ScWvtHAB4/giphy.gif" alt="Ninja donut gif" /> 
+        
         <ConnectButton />
       </div>
       <Routes>
