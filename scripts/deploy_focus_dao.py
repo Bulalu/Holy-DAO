@@ -1,13 +1,14 @@
-from brownie import FocusDao, network
+from brownie import FocusDao, network, config
 from scripts.helpful_scripts import get_account
 
 
 def deploy():
     account = get_account()
+    nft_address = "0x705f8B395361218056B20eE5C36853AB84b8bbFF"
 
     if len(FocusDao) == 0:
         print("Hello ser, we deploying")
-        contract = FocusDao.deploy({"from": account}, publish_source = True)
+        contract = FocusDao.deploy(nft_address, {"from": account}, publish_source = config["networks"][network.show_active()]["verify"])
         
         return contract
     

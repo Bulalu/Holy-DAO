@@ -69,7 +69,7 @@ const Proposal = () => {
   async function castVote(status) {
     // const web3 = await Moralis.enableWeb3();
     let options = {
-      contractAddress: "0x4BAF56d5b3d6C505F1BfaA492B555033E68c8ED0",
+      contractAddress: "0x8316B2Bd5876AC2816a1Aa851e18cF8D1de47C24",
       functionName: "voteOnProposal",
       abi: [
         {

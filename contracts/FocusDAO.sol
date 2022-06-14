@@ -1,15 +1,16 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.13;
 
+import "@openzeppelin/contracts/access/Ownable.sol";
 
 // iconic NFTs interface
 interface IdaoNft{
     function balanceOf(address _owner) external view returns (uint256);}
 
 
-contract FocusDao {
+contract FocusDao is Ownable {
 
-    address public owner;
+   
     uint256 nextproposal;
     uint256[] public validTokens;
     IdaoNft nftContract;
@@ -51,12 +52,19 @@ contract FocusDao {
         bool passed
     );
 
+    event updateNFTContract( address _address);
 
-    constructor(){
-        owner = msg.sender;
+
+    constructor(address nftAddress){
+        // owner = msg.sender;
         nextproposal = 1;
-        nftContract = IdaoNft(0x705f8B395361218056B20eE5C36853AB84b8bbFF);
+        nftContract = IdaoNft(nftAddress);
         validTokens = [0];
+    }
+
+    function setNFTContract(address _address) external onlyOwner {
+        nftContract = IdaoNft(_address);
+        emit updateNFTContract(_address);
     }
 
 
@@ -100,9 +108,7 @@ contract FocusDao {
         require(checkVoteEligibility(_id, msg.sender), "You can not vote on this Proposal");
         require(!proposal[_id].voteStatus[msg.sender], "You have already voted on this Proposal");
         
-
         Proposal storage p = proposal[_id];
-
 
         p.voteStatus[msg.sender] = true;
         
@@ -112,13 +118,10 @@ contract FocusDao {
             p.votesAgainst++;
         }
 
-        
-
         emit newVote(p.votesFor, p.votesAgainst, msg.sender, _id, _vote);
     }
 
-    function countVotes(uint256 _id) public {
-        require(msg.sender == owner, "Only Owner Can Count Votes");
+    function countVotes(uint256 _id) public onlyOwner {
         require(proposal[_id].exists, "This Proposal does not exist");
         require(block.number > proposal[_id].deadline, "Voting has not concluded");
         require(!proposal[_id].countConducted, "Count already conducted");
@@ -134,9 +137,7 @@ contract FocusDao {
         emit proposalCount(_id, p.passed);
     }
 
-    function addTokenId(uint256 _tokenId) public {
-        require(msg.sender == owner, "Only Owner can Add tokens");
-
+    function addTokenId(uint256 _tokenId) public onlyOwner {
         validTokens.push(_tokenId);
     }
 

@@ -18,7 +18,7 @@ const Home = () => {
 
   async function createProposal(newProposal) {
     let options = {
-      contractAddress: "0x4BAF56d5b3d6C505F1BfaA492B555033E68c8ED0",
+      contractAddress: "0x8316B2Bd5876AC2816a1Aa851e18cF8D1de47C24",
       functionName: "createProposal",
       abi: [
         {
@@ -65,7 +65,7 @@ const Home = () => {
 
 
   async function getStatus(proposalId) {
-    const ProposalCounts = Moralis.Object.extend("ProposalCount");
+    const ProposalCounts = Moralis.Object.extend("ProposalCounts");
     const query = new Moralis.Query(ProposalCounts);
     query.equalTo("uid", proposalId);
     const result = await query.first();
@@ -114,7 +114,7 @@ const Home = () => {
 
 
       async function getPassRate() {
-        const ProposalCounts = Moralis.Object.extend("ProposalCount");
+        const ProposalCounts = Moralis.Object.extend("ProposalCounts");
         const query = new Moralis.Query(ProposalCounts);
         const results = await query.find();
         let votesUp = 0;
