@@ -109,11 +109,12 @@ const Home = () => {
         );
         setProposals(table);
         setTotalP(results.length);
+        
       }
 
 
       async function getPassRate() {
-        const ProposalCounts = Moralis.Object.extend("ProposalCounts");
+        const ProposalCounts = Moralis.Object.extend("ProposalCount");
         const query = new Moralis.Query(ProposalCounts);
         const results = await query.find();
         let votesUp = 0;
@@ -132,8 +133,6 @@ const Home = () => {
       const fetchNFTOwners = async () => {
         const options = {
           address: "0x705f8B395361218056B20eE5C36853AB84b8bbFF",
-          // token_id:
-          //   "34885103611559094078416375598166902696017567311370712658413208238551126245396",
           chain: "rinkeby",
         };
         const NFTOwners = await Web3Api.token.getNFTOwners(options);
